@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension id="pseudocontraction.view"
+		point="org.protege.editor.core.application.ViewComponent">
+		<label value="Pseudo-contraction" />
+		<class
+			value="br.usp.ime.pseudocontraction.protegeplugin.MainView" />
+		<headerColor value="@org.protege.ontologycolor" />
+	</extension>
+
+	<extension id="ExampleWorkspaceTab2"
+		point="org.protege.editor.core.application.WorkspaceTab">
+		<label value="Pseudo-contraction" />
+		<class
+			value="br.usp.ime.pseudocontraction.protegeplugin.PseudoContractionTab" />
+		<index value="Y" />
+		<editorKitId value="OWLEditorKit" />
+		<defaultViewConfigFileName
+			value="pseudocontraction-tab.xml" />
+	</extension>
+</plugin>

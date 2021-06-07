@@ -1,0 +1,6 @@
+.classpath
+.settings/
+build.properties
+META-INF/
+target/
+
