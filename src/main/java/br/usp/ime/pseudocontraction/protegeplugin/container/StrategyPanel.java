@@ -82,7 +82,7 @@ public class StrategyPanel extends JPanel {
     private JPanel remainderEmptyPanel;
     private Component verticalGlue;
 
-    private enum SortingOption {
+    public enum SortingOption {
         NONE("Do not sort"), BINARY("Sort (binary)"), COUNT("Sort (count)");
 
         private String displayText;
@@ -569,6 +569,14 @@ public class StrategyPanel extends JPanel {
 
     public SortingOption getKernelSortingOption() {
         return (SortingOption) kerEnlargingSortCbox.getSelectedItem();
+    }
+
+    public OWLAxiom getSentence() {
+        return sentence;
+    }
+
+    public void setSentence(OWLAxiom sentence) {
+        this.sentence = sentence;
     }
 
 }

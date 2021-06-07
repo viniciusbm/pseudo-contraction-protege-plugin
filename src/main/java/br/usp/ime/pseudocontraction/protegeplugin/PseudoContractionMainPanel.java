@@ -38,12 +38,14 @@ import br.usp.ime.owlchange.maxnon.single.blackbox.enlarge.MaxNonEnlarger;
 import br.usp.ime.owlchange.maxnon.single.blackbox.shrink.MaxNonShrinker;
 import br.usp.ime.owlchange.minimp.single.blackbox.enlarge.MinImpEnlarger;
 import br.usp.ime.owlchange.minimp.single.blackbox.shrink.MinImpShrinker;
+import br.usp.ime.owlchange.util.SyntacticConnectivitySorting;
 import br.usp.ime.pseudocontraction.protegeplugin.container.ConsequenceOperatorPanel;
 import br.usp.ime.pseudocontraction.protegeplugin.container.ConstructionPanel;
 import br.usp.ime.pseudocontraction.protegeplugin.container.ConstructionPanel.Construction;
 import br.usp.ime.pseudocontraction.protegeplugin.container.RunPanel;
 import br.usp.ime.pseudocontraction.protegeplugin.container.SentencePanel;
 import br.usp.ime.pseudocontraction.protegeplugin.container.StrategyPanel;
+import br.usp.ime.pseudocontraction.protegeplugin.container.StrategyPanel.SortingOption;
 import br.usp.ime.pseudocontraction.protegeplugin.window.IncisionFunctionDialogue;
 import br.usp.ime.pseudocontraction.protegeplugin.window.SelectionFunctionDialogue;
 
@@ -169,9 +171,20 @@ public class PseudoContractionMainPanel extends JPanel {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
+
+            SortingOption sort;
+
             Set<OWLAxiom> resultingOntology = null;
+            strategyPanel.setSentence(sentenceToContract);
             switch (construction) {
             case KERNEL:
+                sort = strategyPanel.getKernelSortingOption();
+                if (sort != SortingOption.NONE) {
+                    consequences = new SyntacticConnectivitySorting(
+                            sentenceToContract.getSignature(),
+                            SyntacticConnectivitySorting.Order
+                                    .valueOf(sort.name())).sort(consequences);
+                }
                 MinImpEnlarger kerEnlarger = strategyPanel.getKernelEnlarger();
                 MinImpShrinker kerShrinker = strategyPanel.getKernelShrinker();
                 Set<Set<OWLAxiom>> kernelSet = worker.computeKernelSet(
@@ -197,6 +210,13 @@ public class PseudoContractionMainPanel extends JPanel {
                 }
                 break;
             case PARTIAL_MEET:
+                sort = strategyPanel.getRemainderSortingOption();
+                if (sort != SortingOption.NONE) {
+                    consequences = new SyntacticConnectivitySorting(
+                            sentenceToContract.getSignature(),
+                            SyntacticConnectivitySorting.Order
+                                    .valueOf(sort.name())).sort(consequences);
+                }
                 MaxNonShrinker remShrinker = strategyPanel
                         .getRemainderShrinker();
                 MaxNonEnlarger remEnlarger = strategyPanel

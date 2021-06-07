@@ -3,4 +3,5 @@
 build.properties
 META-INF/
 target/
-
+*.class
+bin/
